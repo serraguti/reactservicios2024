@@ -26,12 +26,14 @@ export default class DepartamentosEmpleados extends Component {
     loadDepartamentos = () =>{
         var request = "api/departamentos";
         var url = Global.urlApiDepartamentos + request;
+        console.log("Antes del servicio");
         axios.get(url).then(response => {
-            console.log(response.data);
+            console.log("Leyendo servicio");
             this.setState({
                 departamentos: response.data
             })
         })
+        console.log("Despues del servicio");
     }
 
     componentDidMount = () => {
