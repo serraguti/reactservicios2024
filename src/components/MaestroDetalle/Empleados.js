@@ -4,7 +4,8 @@ import Global from '../../Global'
 
 export default class Empleados extends Component {
     state = {
-        empleados: []
+        empleados: [],
+        texto: ""
     }
 
     loadEmpleados = () => {
@@ -12,16 +13,28 @@ export default class Empleados extends Component {
         var request = "api/empleados/empleadosdepartamento/" + idDepartamento;
         var url = Global.urlApiEmpleados2 + request;
         console.log("Props Id: " + this.props.iddepartamento);
-        // axios.get(url).then(response => {
-        //     console.log(response.data);
-        //     this.setState({
-        //         empleados: response.data
-        //     })
-        // })
+        axios.get(url).then(response => {
+            console.log(response.data);
+            this.setState({
+                empleados: response.data
+            })
+        })
     }
 
     componentDidMount = () => {
         this.loadEmpleados();
+    }
+
+    //RECIBIMOS LAS ANTIGUAS PROPS (10)
+    componentDidUpdate = (oldProps) => {
+        //SI COMPARAMOS, PODEMOS ACTUALIZAR EL DIBUJO SOLAMENTE CUANDO 
+        //HA CAMBIADO props (20)
+        console.log("Old props: " + oldProps.iddepartamento);
+        console.log("Current props: " + this.props.iddepartamento);
+        //SOLAMENTE ACTUALIZAREMOS CUANDO PROPS HA CAMBIADO DE VALOR
+        if (oldProps.iddepartamento != this.props.iddepartamento){
+            this.loadEmpleados();
+        }
     }
 
   render() {
